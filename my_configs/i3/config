@@ -1,0 +1,70 @@
+include-file = window	
+include-file = workspaces
+
+set $mod Mod4
+font pango:monospace 12
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec_always --no-startup-id xinput --set-prop 8 "libinput Natural Scrolling Enabled" 1 
+exec_always --no-startup-id xinput --set-prop 8 "libinput Tapping Enabled" 1
+exec_always --no-startup-id xinput --set-prop 8 "libinput Scrolling Pixel Distance" 45
+exec_always --no-startup-id setxkbmap -model pc105 -layout us,ru -option grp:alt_shift_toggle
+
+exec_always --no-startup-id xinput --set-prop 2 "libinput Natural Scrolling Enabled" 1 
+exec_always --no-startup-id xinput --set-prop 2 "libinput Tapping Enabled" 1
+exec_always --no-startup-id xinput --set-prop 2 "libinput Scrolling Pixel Distance" 45
+
+
+########################## MY AUTO START ##########################
+exec --no-startup-id nitrogen --restore
+#exec_always --no-startup-id polybar
+exec_always --no-startup-id bash ~/.config/polybar/launch.sh --forest
+exec_always --no-startup-id picom
+#exec_always --no-startup-id picom --shadow-opacity=OPACITY
+########################## MY CONFIG ##########################
+bindsym $mod+F1 exec blueman-manager
+bindsym $mod+F2 exec pcmanfm
+bindsym $mod+F3 exec chromium
+bindsym $mod+F4 exec nm-connection-editor
+bindsym $mod+F9 exec --no-startup-id xrandr --output HDMI-1 --mode 1920x1080 --pos 0x0
+bindsym $mod+F10 exec --no-startup-id xrandr --output HDMI-1 --mode 1280x1024 --rate 75 --pos 1920x0
+bindsym $mod+F11 exec --no-startup-id xrandr --output HDMI-1 --mode 1920x1080 --pos 1920x0
+bindsym $mod+F12 exec --no-startup-id xrandr --output HDMI-1 --off
+
+bindsym $mod+Z exec --no-startup-id i3lock-fancy
+#bindsym $mod+Z exec scripts/lock
+
+bindsym $mod+d exec --no-startup-id rofi -show run -font "Noto Sans 13"
+
+#яркость
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s 32+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 32-
+
+#громкость
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+
+##############################################################
+floating_modifier $mod
+tiling_drag modifier titlebar
+bindsym $mod+Return exec kitty /bin/zsh
+bindsym $mod+q kill
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+##screen
+bindsym $mod+Print exec --no-startup-id maim --format=png | xclip -selection clipboard -t image/png
+bindsym Print exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+
+#bar {
+#	position top
+#        status_command i3status
+#}
